@@ -13,19 +13,111 @@
    margin: 0;
 }
 
+body {
+   width: 100vw;
+   max-width: 100%;
+   height: 100vh;
+   max-height: 100%;
+
+   background-color: #333333;
+}
+
 pre {
-   margin: auto;
    white-space: pre-wrap;
+}
+
+#root {
+   margin: auto;
    padding: 20px;
    max-width: 500px;
+
+   font-size: 14px;
+   color: #f1f1f1;
+}
+
+#info div {
+   padding-bottom: 14px;
+}
+
+#info div:hover {
+   cursor: pointer;
 }
 </style>
 <body>
-   <pre>My name is Shridhar Gaur. I live at 557 E Peltason Drive, Room 3024; Irvine, California; Zip code 92617.
-      
-I'm a 5-6th grade tutor by day, teaching elementary students math, english, and science, and a superhero by night, protecting the streets of Sammamish, my hometown. Crime runs rampant in these streets, and only one thing can stop them. Vengeance. Me.
-      
-I am Vengeance.</pre>
+   <div id="root">
+      <pre>3024/8 FILES</pre>
+      <pre>
+
+Contained below are highly secretive, classified information on the occupants of the following address:
+
+557 E Peltason Drive
+Rooms 3024 & 3028
+Irvine, California
+92617
+
+It is of utmost importance these files do NOT fall in their hands.
+
+</pre>
+      <pre id="info"></pre>
+   </div>
+
+   <script>
+      var info = [
+         {
+            name: "Shrihar Gaur",
+            description: "My name is Shridhar Gaur. I live at 557 E Peltason Drive, Room 3024; Irvine, California; Zip code 92617.\n\nI'm a 5-6th grade tutor by day, teaching elementary students math, english, and science, and a superhero by night, protecting the streets of Sammamish, my hometown. Crime runs rampant in these streets, and only one thing can stop them. Vengeance. Me.\n\nI am Vengeance."
+         },
+         {
+            name: "Miles Nguyen",
+            description: "im racist",
+         },
+         {
+            name: "Milan Das",
+            description: "[REDACTED]",
+         },
+         {
+            name: "Daniel Kim",
+            description: "[REDACTED]",
+         },
+         {
+            name: "Kai Dinges",
+            description: "[REDACTED]",
+         },
+         {
+            name: "Warat K",
+            description: "[REDACTED]",
+         },
+         {
+            name: "Benjamin Wong",
+            description: "[REDACTED]",
+         }
+      ]
+      info.sort((a, b) => { return a.name > b.name});
+      for (var i = 0; i < info.length; i++) {
+         info[i].name = info[i].name.toUpperCase();
+      }
+
+      var infoEl = document.getElementById("info");
+
+      for (var i = 0; i < 8; i++) {
+         var nextTarget = (i < info.length) ? info[i] : { name: "[REDACTED]", description: "[REDACTED]", }
+
+         var newEl = document.createElement("div");
+         newEl.textContent = "[+] " + nextTarget.name;
+         newEl.target = nextTarget;
+         infoEl.appendChild(newEl);
+
+         newEl.onclick = (e) => {
+            var el = e.target;
+
+            if(el.textContent.includes("[+]")) {
+               el.textContent = "[-] " + el.target.name + "\n" + el.target.description + "\n[END OF FILE]";
+            } else {
+               el.textContent = "[+] " + el.target.name;
+            }
+         }
+      }
+   </script>
 </body>
 
 </html>
